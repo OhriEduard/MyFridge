@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style2.css">
+    <script src="https://kit.fontawesome.com/cda358d5a3.js" crossorigin="anonymous"></script>
+    <script src="scripts/script2.js"></script>
+    <title>Alimentele mele | MyFridge</title>
+</head>
+<body>
+    <div class="menu">
+        <ul class="horizontal-list">
+            <li onclick="redirectTo('index3.html')">Lista Cumparaturi</li>
+            <li onclick="redirectTo('index2.html')">Alimetele mele</li>
+            <li onclick="redirectTo('index.html')">Logout</li>
+        </ul>
+    </div>
+
+    <div class="bodyContainer">
+      <div class="mainContainer" id="mainContainer" >
+        <div class="actionContainer" id="actionContainer">
+          <div class="wrapper">
+            <a id="adaugaButton" onclick="openAdaugaModal()">Adauga alimente </a>
+          </div>
+          <div class="searchBar">
+            <input type="text" class="filter" id="filter" placeholder="Cauta dupa nume..." onkeyup="searchForName(this)">
+            <i class="fa-solid fa-magnifying-glass" id="magnify-glass"></i>
+          </div>
+          <div class="checkBoxArea">
+            <input type="checkbox" name="showSpoiled" id="showSpoiled" onchange="searchForSpoiled()">
+            <label for="showSpoiled"> Show spoiled </label>
+          </div>
+          <div class="checkBoxArea">
+            <input type="checkbox" name="showAboutToSpoil" id="showAboutToSpoil" onchange="searchForSpoiled()">
+            <label for="showAboutToSpoil"> Show about to spoil </label>
+          </div>
+        </div>
+  
+        <div class="tableContainer" id="tableContainer">
+          <main>
+            <table id="tableRecord">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td>Nume :</td>
+                    <td>Expira la :</td>
+                    <td>Unitate Masura :</td>
+                    <td>Cantitate :</td>
+                    <td></td>
+                  </tr>
+              </thead>
+              <tbody id="tableBody">
+              </tbody>
+            </table>
+          </main>
+        </div>
+      </div>
+    </div>
+  
+  
+  <div id="demo-modal" class="modal">
+      <div class="modal__content">
+  
+          <h4>
+            Completeaza campurile de mai jos 
+          </h4>
+          <form>
+            <table>
+              <tr>
+                <td>
+                  <label for="nume"> Nume :</label>
+                </td>
+                <td colspan="3">
+                  <input type="text" id="nume" required>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="select"> Expira la :</label>
+                </td>
+                <td colspan="3">
+                  <select name="year" id="year" required>
+                    <option value="pickyear">Anul</option>
+                  </select>
+                  <select name="month" id="month" required>
+                    <option value="pickmonth">Luna</option>
+                  </select>
+                  <select name="day" id="day" required>
+                    <option value="pickday">Ziua</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td> <label for="unitateMasura"> U.M. :</label></td>
+                <td>
+                  <select name="unitateMasura" id="unitateMasura" required>
+                    <option value="BUC">BUC</option>
+                    <option value="KG">KG</option>
+                    <option value="CUTII">CUTII</option>
+                    <option value="SACI">SACI</option>
+                  </select>
+                </td>
+                <td style="width: 20%; text-align: right;">
+                  <label for="cantitateInput"> Cantitate :</label>
+                </td>
+                <td style="width: 20%; text-align: left;">
+                  <input type="number" id="cantitateInput" style="width: 4vw;" required oninput="validateInput()">
+                </td>
+              </tr>
+            </table>
+          </form>
+  
+          <div class="modal__footer">
+            <button onclick="submitForm(this)">Submit</button>
+          </div>
+          <a id="modalCloseButton" class="modal__close"  onclick="closeModal(this)">&times;</a>
+      </div>
+  </div>
+
+  <div id="edit-modal" class="modal">
+    <div class="modal__content">
+
+        <h4>
+          Schimba campurile de mai jos 
+        </h4>
+        <form>
+          <table>
+            <tr>
+              <td>
+                <label for="edit-nume"> Nume :</label>
+              </td>
+              <td colspan="3">
+                <input type="text" id="edit-nume" required>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="select"> Expira la :</label>
+              </td>
+              <td colspan="3">
+                <select name="year" id="edit-year" required>
+                  <option value="pickyear">Anul</option>
+                </select>
+                <select name="month" id="edit-month" required>
+                  <option value="pickmonth">Luna</option>
+                </select>
+                <select name="day" id="edit-day" required>
+                  <option value="pickday">Ziua</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td> <label for="edit-unitateMasura"> U.M. :</label></td>
+              <td>
+                <select name="unitateMasura" id="edit-unitateMasura" required>
+                  <option value="BUC">BUC</option>
+                  <option value="KG">KG</option>
+                  <option value="CUTII">CUTII</option>
+                  <option value="SACI">SACI</option>
+                </select>
+              </td>
+              <td style="width: 20%; text-align: right;">
+                <label for="edit-cantitateInput"> Cantitate :</label>
+              </td>
+              <td style="width: 20%; text-align: left;">
+                <input type="number" id="edit-cantitateInput" style="width: 4vw;" required oninput="validateInput()">
+              </td>
+            </tr>
+          </table>
+        </form>
+
+        <div class="modal__footer">
+          <button onclick="submitEditForm(this)">Editeaza</button>
+        </div>
+        <a id="modalCloseButton" class="modal__close" onclick="closeModal(this)">&times;</a>
+    </div>
+  </div>
+  
+  <div id="notification-container" class="notification-container"></div>
+</body>
+</html>
